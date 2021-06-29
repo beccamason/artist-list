@@ -2,11 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose"); 
 const User = require("./models/user");
 const app = express(); 
-const userRouter = require("./routes");
+const artistRouter = require("./routes/artist");
+const mylistRouter = require("./routes/mylist");
+const registerRouter = require("./routes/register");
+const userRouter = require("./routes/users");
 require("dotenv").config(); 
-
-app.use(express.json()); 
-app.use("/users", userRouter); 
 
 const port = process.env.PORT || 5000; 
 
@@ -24,6 +24,12 @@ const connectDB = async () => {
 
 connectDB(); 
 
+app.use(express.json()); 
+app.use("/artist", artistRouter);
+app.use("/mylist", mylistRouter);
+app.use("/register", registerRouter);
+app.use("/users", userRouter);
+
 const user = new User({
     name: "Becca",
     email: "bexbkool@test.com", 
@@ -34,7 +40,7 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`); 
 });
 
-app.get("/", async (req, res) => {
-    await user.save(); 
+app.get("/", async(req, res) => { 
+    await user.save();
     res.send("<h1>Hello World</h1>")
 })
