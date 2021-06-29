@@ -1,10 +1,10 @@
 const mongoose = require("mongoose"); 
 
-const list = new mongoose.Schema({
+const List = new mongoose.Schema({
     userID: {
         type: String, 
         required: true
     },
 });
 
-module.exports = mongoose.model("list", list);
+module.exports = mongoose.model("list", List);

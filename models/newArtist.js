@@ -1,6 +1,6 @@
 const mongoose = require("mongoose"); 
 
-const artist = new mongoose.Schema({
+const Artist = new mongoose.Schema({
     userid: {
         type: String, 
         required: true
@@ -19,4 +19,4 @@ const artist = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model("artists", artist);
+module.exports = mongoose.model("artists", Artist);
