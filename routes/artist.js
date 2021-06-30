@@ -1,16 +1,25 @@
 const express = require("express"); 
 const router = express.Router(); 
-const artist = require("../models/newArtist");
 const Artist = require("../models/newArtist");
+const User = require("../models/user");
 
-router.post("/", (req, res) => {
-    let userid = req.body.userid; 
-    let name = req.body.name; 
-    let nationality = req.body.nationality; 
-    let medium = req.body.medium;
-    let artist = new Artist({userid: userid, name: name, nationality: nationality, medium: medium});
-    artist.save();
-    res.status(201).send("New Artist Added to Your List!");
+router.post("/", async (req, res) => {
+    try {
+        const artist = new Artist({
+            name: req.body.name, 
+            nationality: req.body.nationality, 
+            medium: req.body.medium,
+            owner: req.body.userId
+        });
+        await artist.save();
+
+        const user = await User.findById({_id: artist.owner});
+        user.favouriteArtists.push(artist);
+        await user.save();
+        res.status(201).send(`New Artist Added to Your List: ${artist}`);
+    } catch (err) {
+        res.status(400).send(`Error: ${err}`)
+    }
 });
 
 module.exports = router;

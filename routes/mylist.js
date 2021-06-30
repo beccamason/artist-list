@@ -1,12 +1,23 @@
 const express = require("express"); 
 const router = express.Router(); 
-const artist = require("../models/newArtist");
-const list = require("../models/list");
-const List = require("../models/list");
+const User = require("../models/user");
+const Artist = require("../models/newArtist");
 
-router.get("/", async(req, res) => {
-    const artists = await artist.find({"userid": userID});
-    res.status(200).json(artists);
+router.post("/", async(req, res) => {
+    try {
+    const user = await User.findById({_id: req.body._id});
+    let favArtists = []; 
+    for (i = 0; i < user.favouriteArtists.length; i++) {
+        let holder = user.favouriteArtists[i];
+        artist = await Artist.findById({_id: holder});
+        favArtists.push(artist); 
+    }
+    res.status(200).send(`Here are your Favourite Artists! ${favArtists}`);
+    } catch (err) {
+        res.status(400).send(`Error: ${err}`); 
+    }
 });
+
+favArtists = [];
 
 module.exports = router;

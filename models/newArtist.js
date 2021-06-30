@@ -1,10 +1,7 @@
 const mongoose = require("mongoose"); 
+const {Schema} = require("mongoose");
 
 const Artist = new mongoose.Schema({
-    userid: {
-        type: String, 
-        required: true
-    },
     name: {
         type: String, 
         required: true
@@ -15,6 +12,11 @@ const Artist = new mongoose.Schema({
     },
     medium: {
         type: String,
+        required: true
+    },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "Owner",
         required: true
     }
 });
