@@ -30,17 +30,10 @@ app.use("/mylist", listRouter);
 app.use("/register", registerRouter);
 app.use("/users", userRouter);
 
-const user = new User({
-    name: "Becca",
-    email: "bexbkool@test.com", 
-    password: "potato"
-});
-
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`); 
 });
 
 app.get("/", async(req, res) => { 
-    await user.save();
     res.send("<h1>Hello World</h1>")
 })
