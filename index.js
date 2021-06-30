@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const User = require("./models/user");
 const app = express(); 
 const artistRouter = require("./routes/artist");
-const mylistRouter = require("./routes/mylist");
+const listRouter = require("./routes/mylist");
 const registerRouter = require("./routes/register");
 const userRouter = require("./routes/users");
 require("dotenv").config(); 
@@ -26,7 +26,7 @@ connectDB();
 
 app.use(express.json()); 
 app.use("/artist", artistRouter);
-app.use("/mylist", mylistRouter);
+app.use("/mylist", listRouter);
 app.use("/register", registerRouter);
 app.use("/users", userRouter);
 
